@@ -36,6 +36,11 @@ app.delete('/tasks/:id', async (req, res) => {
     res.status(204).send();
 });
 
+app.patch('/tasks/:id/isCompleted', async (req, res) => {
+    const { id } = req.body;
+    const task = await Task.findByIdAndUpdate(id, { isCompleted : true }, { new: true }); 
+    res.json(task);
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
