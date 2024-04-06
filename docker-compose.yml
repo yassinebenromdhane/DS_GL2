@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  client:
+    build: 
+      context: ./client
+    container_name: clientapp_c
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+  server:
+    build: 
+      context: ./ 
+    container_name: serverapp_c
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+    volumes:
+      - ./:/app
+      - /app/node_modules 
+
+  mongodb:
+    image: mongo:latest 
+    ports:
+      - "27017:27017"
+    volumes:
+      - database:/data/db
+volumes:
+      database:
